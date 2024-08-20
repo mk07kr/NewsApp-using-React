@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
 
 export class News extends Component {
   constructor() {
@@ -7,51 +8,68 @@ export class News extends Component {
     this.state = {
       articles: [],
       loading: false,
-      page:1
+      page: 1,
     };
   }
 
   async componentDidMount() {
     // this.setState({loading: true});
-    let url =
-      `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=1&pageSize=20`;
+    let url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=1&pageSize=20`;
+    this.setState({
+      loading: true
+    });
     let data = await fetch(url);
     let response = await data.json();
-    this.setState({ articles: response.articles,
-      totalResults:this.state.totalResults });
+    this.setState({
+      articles: response.articles,
+      totalResults: this.state.totalResults,
+      loading: false
+    });
     console.log(response);
   }
 
   handleNext = async () => {
-    if (this.state.page + 1 > Math.ceil(this.state.totalResults / 20)) {
-    }
-    else{
-    let url =
-      `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${this.state.page +1}&pageSize=20`;
+    // if (this.state.page + 1 > Math.ceil(this.state.totalResults / 20)) {
+    // } else {
+    let url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${
+      this.state.page + 1
+    }&pageSize=20`;
+    this.setState({
+      loading: true
+    });
     let data = await fetch(url);
     let response = await data.json();
     this.setState({
       articles: response.articles,
       page: this.state.page + 1,
+      loading: false
     });
-  }
   };
- 
 
   handlePrev = async () => {
-    let url =
-      `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${this.state.page - 1}&pageSize=20`;
+    let url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${
+      this.state.page - 1
+    }&pageSize=20`;
+    this.setState({
+      loading: true
+    });
     let data = await fetch(url);
     let response = await data.json();
-    this.setState({ articles: response.articles, page: this.state.page - 1 });
+    this.setState({
+      articles: response.articles,
+      page: this.state.page - 1,
+      loading: false
+    });
   };
 
   render() {
     return (
       <div className="container my-3">
         <h1 className="text-center">NewsApp Top headlines</h1>
+        {this.state.loading && <Spinner/>}
+        
         <div className="row">
-          {this.state.articles.map((element) => {
+          {!this.state.loading && this.state.articles.map((element) => {
             return (
               <div className="col-md-4" key={element.url}>
                 <NewsItem
@@ -67,14 +85,22 @@ export class News extends Component {
           })}
         </div>
         <div className="container d-flex justify-content-between">
-          <button type="button"
+          <button
+            type="button"
             disabled={this.state.page <= 1}
             className="btn btn-info my-3"
             onClick={this.handlePrev}
           >
             &larr; Previous
           </button>
-          <button type="button" className="btn btn-dark my-3" onClick={this.handleNext}>
+          <button
+            type="button"
+            disabled={
+              this.state.page + 1 > Math.ceil(this.state.totalResults / 20)
+            }
+            className="btn btn-dark my-3"
+            onClick={this.handleNext}
+          >
             Next &rarr;
           </button>
         </div>
