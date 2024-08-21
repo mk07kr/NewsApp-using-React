@@ -11,6 +11,7 @@ export default class App extends Component {
     country: "in",
     pageSize: 10,
   };
+  apiKey = process.env.REACT_APP_NEWS_API_KEY;
 
   static propTypes = {
     country: PropTypes.string,
@@ -26,14 +27,16 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <LoadingBar
-        height={4}
-        color="#f11946"
-        progress={this.state.progress}
-        />
+        <LoadingBar height={4} color="#f11946" progress={this.state.progress} />
         <NavBar />
         {/* <News/> */}
-        <News setProgress={this.setProgress} pageSize={5} country="in" category="science" />
+        <News
+          apiKey={this.apiKey}
+          setProgress={this.setProgress}
+          pageSize={5}
+          country="in"
+          category="science"
+        />
       </div>
     );
   }

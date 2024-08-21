@@ -15,7 +15,7 @@ export class News extends Component {
 
   async updateNews() {
     this.props.setProgress(10);
-    const url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${this.state.page}&pageSize=20`;
+    const url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=20`;
     this.setState({
       loading: true,
     });
@@ -51,7 +51,7 @@ export class News extends Component {
   // };
 
   fetchMoreData = async () => {
-    const url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${
+    const url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=${this.props.apiKey}&page=${
       this.state.page + 1
     }&pageSize=10`;
     let data = await fetch(url);
@@ -129,12 +129,7 @@ export class News extends Component {
     );
   }
 }
-// News API Key = 9397bf7a878c48339cff0f0fbfef76c7
+
 export default News;
 
-// "scripts": {
-//   "start": "react-scripts start",
-//   "build": "react-scripts build",
-//   "test": "react-scripts test",
-//   "eject": "react-scripts eject"
-// },
+
