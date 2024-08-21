@@ -67,7 +67,7 @@ export class News extends Component {
   render() {
     return (
       <>
-        <h1 className="text-center">NewsApp Top headlines</h1>
+        <h1 className="text-center" style={{marginTop:"90px"}}>NewsApp Top Headlines</h1>
         {/* {this.state.loading && <Spinner />} */}
 
         <InfiniteScroll
