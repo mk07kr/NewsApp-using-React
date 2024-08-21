@@ -4,7 +4,7 @@ export class NavBar extends Component {
   render() {
     return (
       <div>
-        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
           <div className="container-fluid">
             <a className="navbar-brand" href="/">
               NewsApp
@@ -73,7 +73,7 @@ export class NavBar extends Component {
                   </a>
                 </li>
               </ul>
-              
+
               <form className="d-flex" role="search">
                 <input
                   className="form-control me-2"

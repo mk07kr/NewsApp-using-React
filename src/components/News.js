@@ -13,8 +13,7 @@ export class News extends Component {
   }
 
   async componentDidMount() {
-    // this.setState({loading: true});
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=1&pagesize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=1&pageSize=20`;
     this.setState({
       loading: true,
     });
@@ -31,13 +30,10 @@ export class News extends Component {
   handleNext = async () => {
     // if (this.state.page + 1 > Math.ceil(this.state.totalResults / 20)) {
     // } else {
-    let url = `https://newsapi.org/v2/top-headlines?country=${
-      this.props.country
-    }&category=${
-      this.props.category
-    }&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${
+    let url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${
       this.state.page + 1
-    }&pagesize=${this.props.pageSize}`;
+    }&pageSize=20`;
+
     this.setState({
       loading: true,
     });
@@ -51,13 +47,9 @@ export class News extends Component {
   };
 
   handlePrev = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${
-      this.props.country
-    }&category=${
-      this.props.category
-    }&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${
+    let url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${
       this.state.page - 1
-    }&pagesize=${this.props.pageSize}`;
+    }&pageSize=20`;
 
     this.setState({
       loading: true,
@@ -89,8 +81,11 @@ export class News extends Component {
                         ? element.description.slice(0, 85)
                         : ""
                     }
+                    author={element.author}
+                   
                     imgurl={element.urlToImage}
                     newsurl={element.url}
+                    date={element.publishedAt}
                   />
                 </div>
               );
