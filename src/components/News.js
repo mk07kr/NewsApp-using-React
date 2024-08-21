@@ -14,18 +14,21 @@ export class News extends Component {
   }
 
   async updateNews() {
+    this.props.setProgress(10);
     const url = `https://newsapi.org/v2/everything?q=from=2024-08-19&to=2024-08-19&language=en&sortBy=popularity&apiKey=9397bf7a878c48339cff0f0fbfef76c7&page=${this.state.page}&pageSize=20`;
     this.setState({
       loading: true,
     });
     let data = await fetch(url);
+    this.props.setProgress(35);
     let response = await data.json();
+    this.props.setProgress(70);
     this.setState({
       articles: response.articles,
       totalResults: this.state.totalResults,
       loading: false,
     });
-    console.log(response);
+    this.props.setProgress(100);
   }
 
   async componentDidMount() {
